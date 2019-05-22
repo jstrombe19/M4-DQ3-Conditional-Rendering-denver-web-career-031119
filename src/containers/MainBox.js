@@ -2,8 +2,26 @@ import React from 'react'
 import MenuBar from '../components/MenuBar.js'
 import { Profile, Photos, Cocktails, Pokemon} from '../components/Pages.js'
 
-class MainBox extends React.Component {
+const renderShit = {
+  profile: Profile(),
+  photo: Photos(),
+  cocktail: Cocktails(),
+  pokemon: <Pokemon />
+}
 
+class MainBox extends React.Component {
+  state = {
+    activeIcon: ''
+  }
+
+
+  setActiveIcon = iconId => {
+    this.setState({ activeIcon: iconId })
+  }
+
+  displayThis = () => {
+    return renderShit[this.state.activeIcon]
+  }
 
   render() {
 
@@ -13,12 +31,12 @@ class MainBox extends React.Component {
 
     */
 
-    const detailsToDisplay = <div>Hi, I'm a div!</div>
+    // const detailsToDisplay = <div>Hi, I'm a div!</div>
 
     return (
       <div>
-        <MenuBar />
-        {detailsToDisplay}
+        <MenuBar  setActiveIcon={this.setActiveIcon} activeIcon={this.state.activeIcon} renderShit={renderShit}/>
+        {this.displayThis()}
       </div>
     )
   }
